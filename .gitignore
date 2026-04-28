@@ -1,0 +1,5 @@
+# macOS / editor noise
+.DS_Store
+
+# Python preview server cache
+__pycache__/

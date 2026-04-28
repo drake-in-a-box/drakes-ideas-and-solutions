@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Drake's Ideas and Solutions</title>
+    <meta
+      name="description"
+      content="A futuristic launchpad for Drake's ideas, products, and buildable solutions."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Geist+Mono:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./assets/styles.css" />
+  </head>
+  <body>
+    <div class="background-shell" aria-hidden="true">
+      <div class="orb orb-a"></div>
+      <div class="orb orb-b"></div>
+      <div class="orb orb-c"></div>
+      <div class="grid-glow"></div>
+      <div class="scanlines"></div>
+    </div>
+
+    <header class="topbar">
+      <div class="brand-lockup">
+        <span class="brand-kicker">DRAKE // SIGNAL HUB</span>
+        <span class="brand-name">Drake's Ideas and Solutions</span>
+      </div>
+      <a class="top-cta" href="#ideas-grid">Enter the vault</a>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="hero-copy">
+          <p class="eyebrow">Futuristic landing page • phone-friendly • expandable</p>
+          <h1>Every sharp idea deserves a launch surface.</h1>
+          <p class="hero-text">
+            This is your live idea vault: one place to collect the tools, dashboards,
+            operating systems, and wild builds worth shipping next.
+          </p>
+          <div class="hero-actions">
+            <a class="button button-primary" href="#ideas-grid">Browse projects</a>
+            <button class="button button-secondary" id="focus-live">Show web-ready ideas</button>
+          </div>
+        </div>
+
+        <div class="hero-panel">
+          <div class="hero-panel-header">
+            <span>System view</span>
+            <span class="status-pill">LIVE STATIC PORTAL</span>
+          </div>
+          <div class="hero-metrics">
+            <article>
+              <span class="metric-label">Ideas tracked</span>
+              <strong class="metric-value" id="metric-total">0</strong>
+            </article>
+            <article>
+              <span class="metric-label">Web-ready now</span>
+              <strong class="metric-value" id="metric-web-ready">0</strong>
+            </article>
+            <article>
+              <span class="metric-label">In progress</span>
+              <strong class="metric-value" id="metric-in-progress">0</strong>
+            </article>
+          </div>
+          <div class="hero-panel-footer">
+            <p>
+              Tap any tile to see what it is, why it matters, and how fast it can move.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section class="controls-panel">
+        <div>
+          <p class="section-label">Filters</p>
+          <h2>Sort the future.</h2>
+        </div>
+        <div class="filter-row" id="filter-row"></div>
+      </section>
+
+      <section class="ideas-section">
+        <div class="section-heading">
+          <div>
+            <p class="section-label">Project tiles</p>
+            <h2>Ideas, products, and solutions.</h2>
+          </div>
+          <p class="section-copy">
+            Built to feel like a premium sci-fi control panel, not some dead list of links.
+          </p>
+        </div>
+        <div class="ideas-grid" id="ideas-grid"></div>
+      </section>
+    </main>
+
+    <div class="modal-shell hidden" id="modal-shell" aria-hidden="true">
+      <div class="modal-backdrop" id="modal-backdrop"></div>
+      <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+        <button class="modal-close" id="modal-close" aria-label="Close details">×</button>
+        <p class="modal-kicker" id="modal-kicker"></p>
+        <h3 id="modal-title"></h3>
+        <p class="modal-summary" id="modal-summary"></p>
+        <div class="modal-meta" id="modal-meta"></div>
+        <div class="modal-sections">
+          <section>
+            <h4>What it does</h4>
+            <p id="modal-description"></p>
+          </section>
+          <section>
+            <h4>Why it matters</h4>
+            <p id="modal-value"></p>
+          </section>
+          <section>
+            <h4>Build status</h4>
+            <p id="modal-status"></p>
+          </section>
+        </div>
+      </div>
+    </div>
+
+    <script src="./assets/ideas.js"></script>
+    <script src="./assets/app.js"></script>
+  </body>
+</html>
