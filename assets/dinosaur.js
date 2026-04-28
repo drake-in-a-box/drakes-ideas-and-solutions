@@ -1,95 +1,228 @@
-const quotes = [
-  'Small steady moves beat chaotic big promises.',
-  'Make tonight simple, calm, and a little bit magical.',
-  'The best family systems feel easy, not loud.',
-  'One good evening is built from a few intentional choices.',
-];
+import {
+  STORAGE_KEY,
+  defaultState,
+  normalizeState,
+  pickQuote,
+  pickSpanishWord,
+  buildDinnerPlan,
+  summarizePropertyWatch,
+  checklistProgress,
+  focusLabel,
+} from './dinosaur-state.js';
 
-const spanishWords = [
-  {
-    word: 'alegría',
-    meaning: 'joy',
-    usage: 'Uso: “Traigamos alegría a la casa esta noche.”',
-  },
-  {
-    word: 'playa',
-    meaning: 'beach',
-    usage: 'Uso: “La playa siempre parece una buena idea.”',
-  },
-  {
-    word: 'familia',
-    meaning: 'family',
-    usage: 'Uso: “La familia es el centro de Dinosaur.”',
-  },
-  {
-    word: 'calma',
-    meaning: 'calm',
-    usage: 'Uso: “Queremos una noche con calma.”',
-  },
-];
+let state = loadState();
 
-const dinners = [
-  {
-    title: 'Crispy chicken tacos',
-    description: 'Fast win. Crowd-friendly. Little cleanup.',
-    items: ['Chicken tacos', 'Cut fruit', 'Cucumber slices'],
-  },
-  {
-    title: 'Sheet-pan sausage and veggies',
-    description: 'Low effort and no dumb complexity.',
-    items: ['Sausage', 'Roasted potatoes', 'Peppers + carrots'],
-  },
-  {
-    title: 'Breakfast-for-dinner',
-    description: 'Easy family energy with basically no friction.',
-    items: ['Scrambled eggs', 'Toast or waffles', 'Berries'],
-  },
-  {
-    title: 'Simple pasta night',
-    description: 'Reliable and kid-safe without being boring.',
-    items: ['Butter noodles or red sauce', 'Garlic bread', 'Green beans'],
-  },
-];
+const elements = {
+  date: document.getElementById('dino-date'),
+  quote: document.getElementById('dino-quote'),
+  spanishWord: document.getElementById('dino-spanish-word'),
+  spanishMeaning: document.getElementById('dino-spanish-meaning'),
+  spanishUsage: document.getElementById('dino-spanish-usage'),
+  dinnerTitle: document.getElementById('dino-dinner-title'),
+  dinnerDescription: document.getElementById('dino-dinner-description'),
+  dinnerList: document.getElementById('dino-dinner-list'),
+  rentalSummary: document.getElementById('dino-rental-summary'),
+  meta: document.getElementById('dinosaur-meta'),
+  checklist: document.getElementById('dino-checklist'),
+  dinnerTimeDisplay: document.getElementById('dino-dinner-time-display'),
+  focusDisplay: document.getElementById('dino-focus-display'),
+  checklistProgress: document.getElementById('dino-checklist-progress'),
+  propertySummaryShort: document.getElementById('dino-property-summary-short'),
+  notePreview: document.getElementById('dino-note-preview'),
+  dinnerForm: document.getElementById('dino-dinner-form'),
+  propertyForm: document.getElementById('dino-property-form'),
+  noteForm: document.getElementById('dino-note-form'),
+  refreshSpanishButton: document.getElementById('dino-refresh-spanish'),
+  resetDinnerButton: document.getElementById('dino-reset-dinner'),
+  resetChecklistButton: document.getElementById('dino-reset-checklist'),
+  dinnerInput: document.getElementById('dino-dinner-input'),
+  dinnerSidesInput: document.getElementById('dino-dinner-sides-input'),
+  dinnerTimeInput: document.getElementById('dino-dinner-time-input'),
+  propertyAreaInput: document.getElementById('dino-property-area-input'),
+  propertyBudgetInput: document.getElementById('dino-property-budget-input'),
+  propertyModeInput: document.getElementById('dino-property-mode-input'),
+  propertyNotesInput: document.getElementById('dino-property-notes-input'),
+  noteInput: document.getElementById('dino-note-input'),
+  focusInput: document.getElementById('dino-focus-input'),
+};
 
-const rhythms = [
-  'Dinner by 6:15',
-  'Ten calm minutes together after dinner',
-  'Quick reset before bedtime routine',
-  'Spanish word recap before lights-out',
-];
+function loadState() {
+  try {
+    const raw = window.localStorage.getItem(STORAGE_KEY);
+    if (!raw) return normalizeState(defaultState());
+    return normalizeState(JSON.parse(raw));
+  } catch {
+    return normalizeState(defaultState());
+  }
+}
 
-const today = new Date();
-const seed = today.getDate() + today.getMonth();
-const quote = quotes[seed % quotes.length];
-const spanish = spanishWords[seed % spanishWords.length];
-const dinner = dinners[seed % dinners.length];
+function saveState() {
+  window.localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+}
 
-const dateText = today.toLocaleDateString(undefined, {
-  weekday: 'long',
-  month: 'long',
-  day: 'numeric',
-});
+function formatDate(date = new Date()) {
+  return date.toLocaleDateString(undefined, {
+    weekday: 'long',
+    month: 'long',
+    day: 'numeric',
+  });
+}
 
-document.getElementById('dino-date').textContent = dateText;
-document.getElementById('dino-quote').textContent = quote;
-document.getElementById('dino-spanish-word').textContent = `${spanish.word} — ${spanish.meaning}`;
-document.getElementById('dino-spanish-meaning').textContent = 'Word of the day for the kids and the grownups.';
-document.getElementById('dino-spanish-usage').textContent = spanish.usage;
-document.getElementById('dino-dinner-title').textContent = dinner.title;
-document.getElementById('dino-dinner-description').textContent = dinner.description;
-document.getElementById('dino-rental-summary').textContent =
-  'Rental watch is staged for premium daily summaries near Jacksonville. Live listing feeds are the next step, not fake links.';
+function formatTime(timeValue) {
+  if (!/^\d{2}:\d{2}$/.test(timeValue || '')) return '6:15 PM';
+  const [hours, minutes] = timeValue.split(':').map((part) => parseInt(part, 10));
+  const date = new Date();
+  date.setHours(hours, minutes, 0, 0);
+  return date.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' });
+}
 
-document.getElementById('dino-dinner-list').innerHTML = dinner.items
-  .map((item) => `<li>${item}</li>`)
-  .join('');
+function escapeHtml(value) {
+  return String(value)
+    .replaceAll('&', '&amp;')
+    .replaceAll('<', '&lt;')
+    .replaceAll('>', '&gt;')
+    .replaceAll('"', '&quot;')
+    .replaceAll("'", '&#39;');
+}
 
-document.getElementById('dino-rhythm-list').innerHTML = rhythms
-  .map((item) => `<li>${item}</li>`)
-  .join('');
+function renderChecklist() {
+  elements.checklist.innerHTML = state.checklist
+    .map(
+      (item, index) => `
+        <label class="dino-check-item">
+          <input data-check-index="${index}" type="checkbox" ${item.done ? 'checked' : ''} />
+          <span>${escapeHtml(item.label)}</span>
+        </label>
+      `,
+    )
+    .join('');
+}
 
-document.getElementById('dinosaur-meta').innerHTML = `
-  <span class="project-status-pill">${today.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' })}</span>
-  <span class="project-status-pill">Quote + Spanish + dinner</span>
-  <span class="project-status-pill">Safe public preview</span>
-`;
+function render() {
+  const now = new Date();
+  const spanish = pickSpanishWord(state, now);
+  const dinner = buildDinnerPlan(state, now);
+
+  elements.date.textContent = formatDate(now);
+  elements.quote.textContent = pickQuote(now);
+  elements.spanishWord.textContent = `${spanish.word} — ${spanish.meaning}`;
+  elements.spanishMeaning.textContent = 'Word of the day for the kids and the grownups.';
+  elements.spanishUsage.textContent = spanish.usage;
+
+  elements.dinnerTitle.textContent = dinner.title;
+  elements.dinnerDescription.textContent = dinner.description;
+  elements.dinnerList.innerHTML = dinner.items.map((item) => `<li>${escapeHtml(item)}</li>`).join('');
+
+  const propertySummary = summarizePropertyWatch(state);
+  elements.rentalSummary.textContent = `${propertySummary}. Real feed automation is the next step; these are the saved settings that should drive it.`;
+  elements.dinnerTimeDisplay.textContent = formatTime(state.dinnerTime);
+  elements.focusDisplay.textContent = focusLabel(state.focusMode);
+  elements.checklistProgress.textContent = checklistProgress(state);
+  elements.propertySummaryShort.textContent = `${state.propertyMode.replaceAll('-', ' ')} mode`;
+  elements.meta.innerHTML = `
+    <span class="project-status-pill">${now.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' })}</span>
+    <span class="project-status-pill">${focusLabel(state.focusMode)}</span>
+    <span class="project-status-pill">Dinner ${formatTime(state.dinnerTime)}</span>
+    <span class="project-status-pill">Checklist ${checklistProgress(state)}</span>
+  `;
+
+  elements.notePreview.innerHTML = state.quickNote
+    ? `<strong>Saved note:</strong> ${escapeHtml(state.quickNote)}`
+    : '<strong>Saved note:</strong> Nothing saved yet. Keep it simple tonight.';
+
+  elements.dinnerInput.value = state.dinnerTitle;
+  elements.dinnerSidesInput.value = state.dinnerSides;
+  elements.dinnerTimeInput.value = state.dinnerTime;
+  elements.propertyAreaInput.value = state.propertyArea;
+  elements.propertyBudgetInput.value = state.propertyBudget;
+  elements.propertyModeInput.value = state.propertyMode;
+  elements.propertyNotesInput.value = state.propertyNotes;
+  elements.noteInput.value = state.quickNote;
+  elements.focusInput.value = state.focusMode;
+
+  renderChecklist();
+}
+
+function wireEvents() {
+  elements.dinnerForm.addEventListener('submit', (event) => {
+    event.preventDefault();
+    state = normalizeState({
+      ...state,
+      dinnerTitle: elements.dinnerInput.value,
+      dinnerSides: elements.dinnerSidesInput.value,
+      dinnerTime: elements.dinnerTimeInput.value,
+    });
+    saveState();
+    render();
+  });
+
+  elements.propertyForm.addEventListener('submit', (event) => {
+    event.preventDefault();
+    state = normalizeState({
+      ...state,
+      propertyArea: elements.propertyAreaInput.value,
+      propertyBudget: elements.propertyBudgetInput.value,
+      propertyMode: elements.propertyModeInput.value,
+      propertyNotes: elements.propertyNotesInput.value,
+    });
+    saveState();
+    render();
+  });
+
+  elements.noteForm.addEventListener('submit', (event) => {
+    event.preventDefault();
+    state = normalizeState({
+      ...state,
+      quickNote: elements.noteInput.value,
+      focusMode: elements.focusInput.value,
+    });
+    saveState();
+    render();
+  });
+
+  elements.refreshSpanishButton.addEventListener('click', () => {
+    state = normalizeState({
+      ...state,
+      pinnedSpanishIndex: ((state.pinnedSpanishIndex ?? 0) + 1) % 4,
+    });
+    saveState();
+    render();
+  });
+
+  elements.resetDinnerButton.addEventListener('click', () => {
+    state = normalizeState({
+      ...state,
+      dinnerTitle: '',
+      dinnerSides: '',
+    });
+    saveState();
+    render();
+  });
+
+  elements.resetChecklistButton.addEventListener('click', () => {
+    state = normalizeState({
+      ...state,
+      checklist: defaultState().checklist,
+    });
+    saveState();
+    render();
+  });
+
+  elements.checklist.addEventListener('change', (event) => {
+    const target = event.target;
+    if (!(target instanceof HTMLInputElement)) return;
+    const index = parseInt(target.dataset.checkIndex || '-1', 10);
+    if (Number.isNaN(index) || index < 0 || index >= state.checklist.length) return;
+
+    const nextChecklist = state.checklist.map((item, itemIndex) =>
+      itemIndex === index ? { ...item, done: target.checked } : item,
+    );
+    state = normalizeState({ ...state, checklist: nextChecklist });
+    saveState();
+    render();
+  });
+}
+
+wireEvents();
+render();
+window.setInterval(render, 60_000);
