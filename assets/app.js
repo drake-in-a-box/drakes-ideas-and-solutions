@@ -13,6 +13,10 @@ function projectHref(idea) {
   return `./project.html?idea=${encodeURIComponent(idea.slug)}`;
 }
 
+function primaryHref(idea) {
+  return idea.liveUrl || projectHref(idea);
+}
+
 function updateMetrics() {
   document.getElementById('metric-total').textContent = String(ideas.length);
   document.getElementById('metric-web-ready').textContent = String(
@@ -50,7 +54,7 @@ function ideaCard(idea) {
       <span class="card-category">${idea.category}</span>
       <span class="card-priority">${idea.priority}</span>
     </div>
-    <a class="card-link" href="${projectHref(idea)}" aria-label="Open ${idea.title} project page">
+    <a class="card-link" href="${primaryHref(idea)}" aria-label="Open ${idea.title}">
       <div class="card-body">
         <h3>${idea.title}</h3>
         <p>${idea.summary}</p>
@@ -61,7 +65,7 @@ function ideaCard(idea) {
       </div>
     </a>
     <div class="card-actions">
-      <a class="card-action-primary" href="${projectHref(idea)}">Open ${idea.targetLabel}</a>
+      <a class="card-action-primary" href="${primaryHref(idea)}">Open ${idea.targetLabel}</a>
       <button class="card-action-secondary" type="button">Quick view</button>
     </div>
   `;

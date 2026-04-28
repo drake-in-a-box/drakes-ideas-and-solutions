@@ -11,11 +11,12 @@ window.ideasCatalog = [
     value:
       'Turns a passive screen into a beautiful operating surface for the family while keeping the experience safe for young kids.',
     nextAction:
-      'Turn this into a live phone-visible dashboard route with real property feeds and a polished control surface.',
-    targetLabel: 'Project page',
+      'Ship the phone-safe public Dinosaur surface now, then layer in real feeds and settings next.',
+    targetLabel: 'Live surface',
+    liveUrl: './dinosaur.html',
     accent: 'cyan',
     priority: 'High',
-    webReady: false,
+    webReady: true,
   },
   {
     slug: 'job-hunting-tool',

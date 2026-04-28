@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dinosaur • Family Dashboard</title>
+    <meta
+      name="description"
+      content="Phone-friendly live Dinosaur surface with family rhythm, quote, Spanish word, dinner, and beach watch snapshots."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Geist+Mono:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./assets/styles.css" />
+  </head>
+  <body>
+    <div class="background-shell" aria-hidden="true">
+      <div class="orb orb-a"></div>
+      <div class="orb orb-b"></div>
+      <div class="orb orb-c"></div>
+      <div class="grid-glow"></div>
+      <div class="scanlines"></div>
+    </div>
+
+    <header class="topbar">
+      <div class="brand-lockup">
+        <span class="brand-kicker">DINOSAUR // LIVE SURFACE</span>
+        <span class="brand-name">Family Dashboard</span>
+      </div>
+      <a class="top-cta" href="./index.html">Back to hub</a>
+    </header>
+
+    <main>
+      <section class="dinosaur-shell">
+        <section class="dinosaur-hero">
+          <p class="section-label">Good evening mode</p>
+          <h1>Dinosaur is live on your phone now.</h1>
+          <p class="dinosaur-subtitle">
+            A calm family control surface with tonight's rhythm, a quick dinner idea,
+            the Spanish word of the day, and a snapshot of the beach-house hunt.
+          </p>
+          <div class="dinosaur-pill-row" id="dinosaur-meta"></div>
+          <div class="dinosaur-hero-actions">
+            <a class="button button-primary" href="#dinosaur-grid">Open tonight's board</a>
+            <a class="button button-secondary" href="./project.html?idea=dinosaur-dashboard">View project brief</a>
+          </div>
+        </section>
+
+        <section class="dinosaur-grid" id="dinosaur-grid">
+          <article class="dino-card dino-card-feature">
+            <p class="section-label">Tonight</p>
+            <h2 id="dino-date"></h2>
+            <p id="dino-quote" class="dino-feature-copy"></p>
+            <div class="dino-tag-row">
+              <span class="project-status-pill">Kid-safe</span>
+              <span class="project-status-pill">Phone-friendly</span>
+              <span class="project-status-pill">Static + secure</span>
+            </div>
+          </article>
+
+          <article class="dino-card">
+            <p class="section-label">Spanish word</p>
+            <h3 id="dino-spanish-word"></h3>
+            <p id="dino-spanish-meaning"></p>
+            <p id="dino-spanish-usage" class="dino-muted"></p>
+          </article>
+
+          <article class="dino-card">
+            <p class="section-label">Dinner idea</p>
+            <h3 id="dino-dinner-title"></h3>
+            <p id="dino-dinner-description"></p>
+            <ul class="dino-list" id="dino-dinner-list"></ul>
+          </article>
+
+          <article class="dino-card">
+            <p class="section-label">Beach watch</p>
+            <h3>Rental pulse</h3>
+            <p id="dino-rental-summary"></p>
+            <div class="dino-link-stack">
+              <a href="./project.html?idea=beach-house-hunter">Open property strategy</a>
+              <a href="./project.html?idea=dinosaur-dashboard">Open Dinosaur roadmap</a>
+            </div>
+          </article>
+
+          <article class="dino-card">
+            <p class="section-label">Tonight's rhythm</p>
+            <h3>Simple family flow</h3>
+            <ul class="dino-list" id="dino-rhythm-list"></ul>
+          </article>
+
+          <article class="dino-card">
+            <p class="section-label">Next build</p>
+            <h3>What this needs next</h3>
+            <p>
+              Live data hookups, saved settings, and true rental/buy search feeds. For now,
+              this is the safe public phone surface.
+            </p>
+            <div class="dino-tag-row">
+              <span class="project-status-pill">No backend</span>
+              <span class="project-status-pill">No secrets</span>
+              <span class="project-status-pill">GitHub Pages</span>
+            </div>
+          </article>
+        </section>
+      </section>
+    </main>
+
+    <script src="./assets/dinosaur.js"></script>
+  </body>
+</html>

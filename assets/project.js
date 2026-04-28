@@ -12,6 +12,7 @@ const nextAction = document.getElementById('project-next-action');
 const readiness = document.getElementById('project-readiness');
 const statusRow = document.getElementById('project-status-row');
 const hero = document.getElementById('project-hero');
+const liveLink = document.getElementById('project-live-link');
 
 document.title = `${project.title} • Drake's Ideas and Solutions`;
 title.textContent = project.title;
@@ -29,3 +30,8 @@ statusRow.innerHTML = `
   <span class="project-status-pill">${project.readiness}</span>
   <span class="project-status-pill">${project.webReady ? 'Web candidate' : 'Needs deeper build path'}</span>
 `;
+
+if (project.liveUrl) {
+  liveLink.href = project.liveUrl;
+  liveLink.classList.remove('hidden');
+}
