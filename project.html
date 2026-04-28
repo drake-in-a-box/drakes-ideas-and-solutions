@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Project • Drake's Ideas and Solutions</title>
+    <meta
+      name="description"
+      content="Project detail view for Drake's ideas, products, and buildable solutions."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Geist+Mono:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./assets/styles.css" />
+  </head>
+  <body>
+    <div class="background-shell" aria-hidden="true">
+      <div class="orb orb-a"></div>
+      <div class="orb orb-b"></div>
+      <div class="orb orb-c"></div>
+      <div class="grid-glow"></div>
+      <div class="scanlines"></div>
+    </div>
+
+    <header class="topbar">
+      <div class="brand-lockup">
+        <span class="brand-kicker">DRAKE // PROJECT SURFACE</span>
+        <span class="brand-name">Drake's Ideas and Solutions</span>
+      </div>
+      <a class="top-cta" href="./index.html">Back to hub</a>
+    </header>
+
+    <main>
+      <section class="project-shell">
+        <div class="project-hero accent-ice" id="project-hero">
+          <div class="project-overline" id="project-category"></div>
+          <h1 id="project-title">Loading project…</h1>
+          <p class="project-summary" id="project-summary"></p>
+          <div class="project-status-row" id="project-status-row"></div>
+          <div class="project-cta-row">
+            <a class="button button-primary" href="./index.html">Back to all ideas</a>
+            <a class="button button-secondary" id="project-jump" href="#project-detail-grid">See build details</a>
+          </div>
+        </div>
+
+        <div class="project-detail-grid" id="project-detail-grid">
+          <section class="project-panel">
+            <p class="section-label">What it does</p>
+            <h2>Core concept</h2>
+            <p id="project-description"></p>
+          </section>
+          <section class="project-panel">
+            <p class="section-label">Why it matters</p>
+            <h2>Strategic value</h2>
+            <p id="project-value"></p>
+          </section>
+          <section class="project-panel">
+            <p class="section-label">Next action</p>
+            <h2>What we should do next</h2>
+            <p id="project-next-action"></p>
+          </section>
+          <section class="project-panel">
+            <p class="section-label">Reality check</p>
+            <h2>Live readiness</h2>
+            <p id="project-readiness"></p>
+          </section>
+        </div>
+      </section>
+    </main>
+
+    <script src="./assets/ideas.js"></script>
+    <script src="./assets/project.js"></script>
+  </body>
+</html>

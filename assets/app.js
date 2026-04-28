@@ -9,6 +9,10 @@ const focusLiveButton = document.getElementById('focus-live');
 const filters = ['All', ...new Set(ideas.map((idea) => idea.category))];
 let activeFilter = 'All';
 
+function projectHref(idea) {
+  return `./project.html?idea=${encodeURIComponent(idea.slug)}`;
+}
+
 function updateMetrics() {
   document.getElementById('metric-total').textContent = String(ideas.length);
   document.getElementById('metric-web-ready').textContent = String(
@@ -38,8 +42,7 @@ function renderFilters() {
 }
 
 function ideaCard(idea) {
-  const card = document.createElement('button');
-  card.type = 'button';
+  const card = document.createElement('article');
   card.className = `idea-card accent-${idea.accent}`;
   card.innerHTML = `
     <div class="card-glow"></div>
@@ -47,16 +50,22 @@ function ideaCard(idea) {
       <span class="card-category">${idea.category}</span>
       <span class="card-priority">${idea.priority}</span>
     </div>
-    <div class="card-body">
-      <h3>${idea.title}</h3>
-      <p>${idea.summary}</p>
-    </div>
-    <div class="card-footer">
-      <span class="card-stage">${idea.stage}</span>
-      <span class="card-ready">${idea.readiness}</span>
+    <a class="card-link" href="${projectHref(idea)}" aria-label="Open ${idea.title} project page">
+      <div class="card-body">
+        <h3>${idea.title}</h3>
+        <p>${idea.summary}</p>
+      </div>
+      <div class="card-footer">
+        <span class="card-stage">${idea.stage}</span>
+        <span class="card-ready">${idea.readiness}</span>
+      </div>
+    </a>
+    <div class="card-actions">
+      <a class="card-action-primary" href="${projectHref(idea)}">Open ${idea.targetLabel}</a>
+      <button class="card-action-secondary" type="button">Quick view</button>
     </div>
   `;
-  card.addEventListener('click', () => openModal(idea));
+  card.querySelector('.card-action-secondary').addEventListener('click', () => openModal(idea));
   return card;
 }
 
@@ -80,7 +89,7 @@ function openModal(idea) {
   document.getElementById('modal-summary').textContent = idea.summary;
   document.getElementById('modal-description').textContent = idea.description;
   document.getElementById('modal-value').textContent = idea.value;
-  document.getElementById('modal-status').textContent = `${idea.stage} • ${idea.readiness}`;
+  document.getElementById('modal-status').textContent = `${idea.stage} • ${idea.readiness} • Next: ${idea.nextAction}`;
   document.getElementById('modal-meta').innerHTML = `
     <span>${idea.stage}</span>
     <span>${idea.readiness}</span>
