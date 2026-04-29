@@ -54,6 +54,12 @@ test('site documents installable app metadata for phone home-screen entry', () =
     assert.match(html, /rel="apple-touch-icon" href="\.\/assets\/icons\/icon-180\.png"/);
   }
 
+  const indexHtml = fs.readFileSync(path.join(repoRoot, 'index.html'), 'utf8');
+  assert.match(indexHtml, /Open Deadspace/);
+  assert.match(indexHtml, /Open InflataGift/);
+  assert.match(indexHtml, /live\.html\?idea=deadspace/);
+  assert.match(indexHtml, /live\.html\?idea=inflatagift/);
+
   const manifest = JSON.parse(
     fs.readFileSync(path.join(repoRoot, 'manifest.webmanifest'), 'utf8'),
   );
