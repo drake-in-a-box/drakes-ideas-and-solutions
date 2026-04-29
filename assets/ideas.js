@@ -149,5 +149,41 @@ window.ideasCatalog = [
     accent: 'rose',
     priority: 'Medium',
     webReady: true,
+  },
+  {
+    slug: 'inflatagift',
+    title: 'InflataGift',
+    category: 'Product Systems',
+    stage: 'Active build stack',
+    readiness: 'Project page',
+    summary: 'Smart transforming inflatable holiday decorations with software, hardware, mechanical, and AI design layers.',
+    description:
+      'A multi-repo product system spanning the core app, PCB design, CAD/mechanical work, and custom AI-assisted inflatable skin design.',
+    value:
+      'This is real differentiated product territory, not just another app. It combines physical invention, control systems, and consumer-facing delight.',
+    nextAction:
+      'Unify the product story and expose the clearest demo path from concept stack to customer-facing launch surface.',
+    targetLabel: 'Project page',
+    accent: 'emerald',
+    priority: 'High',
+    webReady: false,
+  },
+  {
+    slug: 'deadspace',
+    title: 'Deadspace',
+    category: 'Experiments',
+    stage: 'Concept node',
+    readiness: 'Project page',
+    summary: 'A dark concept lane now added to the hub so it has a real place in the system instead of floating around unnamed.',
+    description:
+      'Deadspace is now represented as a project node inside the hub, ready to be expanded into a fuller brief, live surface, or build track once you decide what shape it should take.',
+    value:
+      'Useful ideas die when they stay vague. Giving this a tile creates a durable place to route attention, context, and next actions.',
+    nextAction:
+      'Define the product angle or experience direction, then promote it from concept node to a proper live path.',
+    targetLabel: 'Project page',
+    accent: 'magenta',
+    priority: 'Medium',
+    webReady: false,
   }
 ];
