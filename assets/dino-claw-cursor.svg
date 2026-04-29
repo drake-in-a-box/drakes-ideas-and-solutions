@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48" fill="none">
+  <defs>
+    <filter id="shadow" x="0" y="0" width="48" height="48" filterUnits="userSpaceOnUse">
+      <feDropShadow dx="0" dy="2" stdDeviation="2" flood-color="#000000" flood-opacity="0.35"/>
+    </filter>
+  </defs>
+  <g filter="url(#shadow)">
+    <path d="M8 7C11 5 14 5 17 7L20 10L24 5C26 3 29 3 31 5C33 7 33 10 31 13L28 17L31 20L35 14C37 11 40 10 43 12C46 14 46 18 43 22L34 33C32 36 29 38 26 40L20 44L18 40L12 42L10 36L5 34L8 28C10 23 13 18 17 15L20 12L17 9C14 6 10 6 8 7Z" fill="#b6f082"/>
+    <path d="M24 5L20 10M31 5L27 11M43 12L36 21" stroke="#f8fff1" stroke-width="3.2" stroke-linecap="round"/>
+    <path d="M18 40L22 31L28 29L26 40L20 44L18 40Z" fill="#86d962"/>
+    <path d="M17 15L13 19L10 28L15 26L18 21L17 15Z" fill="#86d962"/>
+    <path d="M20 12L24 17L20 24L15 26L17 18L20 12Z" fill="#99e56f"/>
+    <path d="M24 17L28 21L28 29L22 31L20 24L24 17Z" fill="#7cd95b"/>
+  </g>
+</svg>

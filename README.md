@@ -13,16 +13,18 @@ A futuristic static landing page for Drake's current ideas, tools, and buildable
 
 ## Dinosaur live surface
 
-`dinosaur.html` now behaves like a real daily-use phone surface instead of a static mock card.
+`dinosaur.html` is now a responsive **TV-model port** instead of a generic phone page.
 
-It includes:
-- saved dinner plan controls
-- saved family note + focus mode
-- persisted bedtime/checklist progress
-- Spanish word rotation
-- locally persisted beach-watch settings summary
+It now reuses the same visual language as the real local Dinosaur board:
+- wallpaper-stage family art
+- museum-glass cards
+- top quote / Spanish / calendar band
+- weather + fishing left rail
+- fish activity + property-watch right rail
+- three family note cards along the bottom
+- local property-watch modal and note persistence via `localStorage`
 
-The state is intentionally browser-local via `localStorage`, which keeps the public site safe: no backend, no auth, no database, no secrets.
+The state is still intentionally browser-local, which keeps the public site safe: no backend, no auth, no database, no secrets.
 
 ## Local preview
 

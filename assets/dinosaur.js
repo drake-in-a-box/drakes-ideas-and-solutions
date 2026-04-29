@@ -1,49 +1,57 @@
 import {
   STORAGE_KEY,
+  WATCH_CONFIG,
   defaultState,
   normalizeState,
-  pickQuote,
-  pickSpanishWord,
-  buildDinnerPlan,
-  summarizePropertyWatch,
-  checklistProgress,
-  focusLabel,
+  quoteForDate,
+  spanishWordForDate,
+  modeForDate,
+  weatherForMode,
+  fishingForMode,
+  fishActivityForMode,
+  summarizeWatch,
 } from './dinosaur-state.js';
 
-let state = loadState();
+const state = {
+  data: loadState(),
+  activeWatchKind: null,
+};
+
+const $ = (id) => document.getElementById(id);
+
+const noteIds = ['kira', 'parker', 'corbin'];
 
 const elements = {
-  date: document.getElementById('dino-date'),
-  quote: document.getElementById('dino-quote'),
-  spanishWord: document.getElementById('dino-spanish-word'),
-  spanishMeaning: document.getElementById('dino-spanish-meaning'),
-  spanishUsage: document.getElementById('dino-spanish-usage'),
-  dinnerTitle: document.getElementById('dino-dinner-title'),
-  dinnerDescription: document.getElementById('dino-dinner-description'),
-  dinnerList: document.getElementById('dino-dinner-list'),
-  rentalSummary: document.getElementById('dino-rental-summary'),
-  meta: document.getElementById('dinosaur-meta'),
-  checklist: document.getElementById('dino-checklist'),
-  dinnerTimeDisplay: document.getElementById('dino-dinner-time-display'),
-  focusDisplay: document.getElementById('dino-focus-display'),
-  checklistProgress: document.getElementById('dino-checklist-progress'),
-  propertySummaryShort: document.getElementById('dino-property-summary-short'),
-  notePreview: document.getElementById('dino-note-preview'),
-  dinnerForm: document.getElementById('dino-dinner-form'),
-  propertyForm: document.getElementById('dino-property-form'),
-  noteForm: document.getElementById('dino-note-form'),
-  refreshSpanishButton: document.getElementById('dino-refresh-spanish'),
-  resetDinnerButton: document.getElementById('dino-reset-dinner'),
-  resetChecklistButton: document.getElementById('dino-reset-checklist'),
-  dinnerInput: document.getElementById('dino-dinner-input'),
-  dinnerSidesInput: document.getElementById('dino-dinner-sides-input'),
-  dinnerTimeInput: document.getElementById('dino-dinner-time-input'),
-  propertyAreaInput: document.getElementById('dino-property-area-input'),
-  propertyBudgetInput: document.getElementById('dino-property-budget-input'),
-  propertyModeInput: document.getElementById('dino-property-mode-input'),
-  propertyNotesInput: document.getElementById('dino-property-notes-input'),
-  noteInput: document.getElementById('dino-note-input'),
-  focusInput: document.getElementById('dino-focus-input'),
+  asOf: $('as-of'),
+  quoteText: $('quote-text'),
+  spanishWord: $('spanish-word'),
+  spanishMeta: $('spanish-meta'),
+  calendarCopy: $('calendar-copy'),
+  tempValue: $('temp-value'),
+  weatherCondition: $('weather-condition'),
+  weatherSubline: $('weather-subline'),
+  weatherDetails: $('weather-details'),
+  fishingSummary: $('fishing-summary'),
+  fishingCopy: $('fishing-copy'),
+  fishingDetailTide: $('fishing-detail-tide'),
+  fishingDetailWindow: $('fishing-detail-window'),
+  fishingDetailWater: $('fishing-detail-water'),
+  fishingForecast: $('fishing-forecast'),
+  fishActivity: $('fish-activity'),
+  wallpaperImage: $('wallpaper-image'),
+  buyStatus: $('buy-status'),
+  buyCopy: $('buy-copy'),
+  buyPills: $('buy-pills'),
+  rentalStatus: $('rental-status'),
+  rentalCopy: $('rental-copy'),
+  rentalPills: $('rental-pills'),
+  watchModal: $('watch-modal'),
+  watchModalKicker: $('watch-modal-kicker'),
+  watchModalTitle: $('watch-modal-title'),
+  watchModalSubtitle: $('watch-modal-subtitle'),
+  watchModalResults: $('watch-modal-results'),
+  watchModalForm: $('watch-modal-form'),
+  watchModalStatus: $('watch-modal-status'),
 };
 
 function loadState() {
@@ -57,170 +65,255 @@ function loadState() {
 }
 
 function saveState() {
-  window.localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+  window.localStorage.setItem(STORAGE_KEY, JSON.stringify(state.data));
 }
 
-function formatDate(date = new Date()) {
-  return date.toLocaleDateString(undefined, {
-    weekday: 'long',
-    month: 'long',
-    day: 'numeric',
-  });
+function escapeHtml(text) {
+  return String(text ?? '').replace(/[&<>"']/g, (char) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[char]));
 }
 
-function formatTime(timeValue) {
-  if (!/^\d{2}:\d{2}$/.test(timeValue || '')) return '6:15 PM';
-  const [hours, minutes] = timeValue.split(':').map((part) => parseInt(part, 10));
-  const date = new Date();
-  date.setHours(hours, minutes, 0, 0);
-  return date.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' });
+function formatAsOf(date = new Date()) {
+  return date.toLocaleString('en-US', { weekday: 'short', month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' });
 }
 
-function escapeHtml(value) {
-  return String(value)
-    .replaceAll('&', '&amp;')
-    .replaceAll('<', '&lt;')
-    .replaceAll('>', '&gt;')
-    .replaceAll('"', '&quot;')
-    .replaceAll("'", '&#39;');
+function setNoteStatus(name, message, tone = 'saved') {
+  const el = $(`notes-status-${name}`);
+  if (!el) return;
+  el.textContent = message;
+  el.dataset.tone = tone;
 }
 
-function renderChecklist() {
-  elements.checklist.innerHTML = state.checklist
-    .map(
-      (item, index) => `
-        <label class="dino-check-item">
-          <input data-check-index="${index}" type="checkbox" ${item.done ? 'checked' : ''} />
-          <span>${escapeHtml(item.label)}</span>
-        </label>
-      `,
-    )
-    .join('');
+function renderTopBand(now, spanish) {
+  elements.asOf.textContent = `Updated ${formatAsOf(now)}`;
+  elements.quoteText.textContent = quoteForDate(now);
+  elements.spanishWord.textContent = `${spanish.article} ${spanish.spanish}`;
+  elements.spanishMeta.textContent = `${spanish.emoji} ${spanish.item}`;
+  elements.calendarCopy.textContent = 'TV-model visual system on phone. Real shared sync can come later.';
+}
+
+function renderWeather(weather) {
+  elements.tempValue.textContent = `${weather.temperatureF}°`;
+  elements.weatherCondition.textContent = weather.condition;
+  elements.weatherSubline.textContent = `High ${weather.highF}° • Low ${weather.lowF}° • Feels ${weather.feelsLikeF}°`;
+  elements.weatherDetails.innerHTML = [
+    ['Rain', `${weather.rainChance}%`],
+    ['Wind', `${weather.windMph} mph`],
+    ['Sunrise', weather.sunrise],
+    ['Sunset', weather.sunset],
+  ].map(([label, value]) => `<div class="mini-stat"><span>${escapeHtml(label)}</span><strong>${escapeHtml(value)}</strong></div>`).join('');
+}
+
+function renderFishing(fishing) {
+  elements.fishingSummary.textContent = `${fishing.label} • ${fishing.score}`;
+  elements.fishingCopy.textContent = fishing.summary;
+  elements.fishingDetailTide.textContent = fishing.nextTide;
+  elements.fishingDetailWindow.textContent = fishing.bestWindow;
+  elements.fishingDetailWater.textContent = `${fishing.waterTempF}° water`;
+  elements.fishingForecast.innerHTML = fishing.next3Days.map((day) => `
+    <div class="forecast-day ${escapeHtml(String(day.label || '').toLowerCase())}">
+      <div class="forecast-day-label">${escapeHtml(day.day)}</div>
+      <div class="forecast-day-score">${escapeHtml(day.score)}</div>
+      <div class="forecast-day-copy">${escapeHtml(day.label)}</div>
+    </div>
+  `).join('');
+}
+
+function renderFishActivity(items) {
+  elements.fishActivity.innerHTML = items.map((item) => `
+    <div class="fish-card">
+      <img class="fish-thumb" src="${escapeHtml(item.image)}" alt="${escapeHtml(item.title)}">
+      <div class="fish-copy">
+        <div class="fish-title-row">
+          <h4>${escapeHtml(item.title)}</h4>
+          <span class="status-pill ${escapeHtml(item.status.toLowerCase())}">${escapeHtml(item.status)}</span>
+        </div>
+        <p>${escapeHtml(item.copy)}</p>
+      </div>
+    </div>
+  `).join('');
+}
+
+function renderWatchCard(kind) {
+  const settings = kind === 'rental' ? state.data.rentalSettings : state.data.buySettings;
+  const summary = summarizeWatch(settings, kind);
+  const statusEl = kind === 'rental' ? elements.rentalStatus : elements.buyStatus;
+  const copyEl = kind === 'rental' ? elements.rentalCopy : elements.buyCopy;
+  const pillsEl = kind === 'rental' ? elements.rentalPills : elements.buyPills;
+  statusEl.textContent = kind === 'rental' ? 'Rental watch ready' : 'Buy watch ready';
+  copyEl.textContent = summary;
+  pillsEl.innerHTML = [
+    settings.sendMode.replaceAll('-', ' '),
+    settings.sendTime,
+    `${settings.maxResults} picks`,
+  ].map((value) => `<span class="watch-pill">${escapeHtml(value)}</span>`).join('');
+}
+
+function renderWallpaper(mode, weather) {
+  elements.wallpaperImage.src = weather.image;
+  elements.wallpaperImage.alt = `Dinosaur wallpaper in ${mode} mode`;
+  document.documentElement.style.setProperty('--wallpaper-height', weather.wallpaperHeight || '88vh');
+  document.documentElement.style.setProperty('--wallpaper-center-x', window.innerWidth < 1180 ? '50%' : '42%');
+  document.documentElement.style.setProperty('--wallpaper-center-y', window.innerWidth < 1180 ? '38%' : '57%');
+}
+
+function renderNotes() {
+  for (const name of noteIds) {
+    const field = $(`note-${name}`);
+    field.value = state.data.notes[name] || '';
+  }
+}
+
+function renderWatchModal() {
+  const kind = state.activeWatchKind;
+  if (!kind) {
+    elements.watchModal.hidden = true;
+    return;
+  }
+
+  const config = WATCH_CONFIG[kind];
+  const settings = kind === 'rental' ? state.data.rentalSettings : state.data.buySettings;
+  elements.watchModal.hidden = false;
+  elements.watchModalKicker.textContent = config.kicker;
+  elements.watchModalTitle.textContent = config.title;
+  elements.watchModalSubtitle.textContent = config.subtitle;
+  elements.watchModalResults.innerHTML = config.latest.map((item) => `
+    <div class="watch-result-card">
+      <div class="watch-result-title">${escapeHtml(item.title)}</div>
+      <div class="watch-result-copy">${escapeHtml(item.copy)}</div>
+      <div class="watch-result-meta">${escapeHtml(item.meta)}</div>
+      <div class="watch-result-links">${item.links.map((link) => `<a class="watch-link-button" href="${escapeHtml(link.href)}">${escapeHtml(link.label)}</a>`).join('')}</div>
+    </div>
+  `).join('');
+
+  elements.watchModalForm.innerHTML = config.fields.map((field) => renderField(field, settings)).join('');
+  elements.watchModalStatus.textContent = 'Ready';
+}
+
+function renderField(field, settings) {
+  const value = settings[field.name];
+  if (field.type === 'textarea') {
+    return `<div class="watch-field ${field.full ? 'full' : ''}"><label for="watch-field-${field.name}">${escapeHtml(field.label)}</label><textarea id="watch-field-${field.name}" name="${escapeHtml(field.name)}">${escapeHtml(value || '')}</textarea></div>`;
+  }
+  if (field.type === 'select') {
+    return `<div class="watch-field ${field.full ? 'full' : ''}"><label for="watch-field-${field.name}">${escapeHtml(field.label)}</label><select id="watch-field-${field.name}" name="${escapeHtml(field.name)}">${field.options.map((option) => `<option value="${escapeHtml(option)}" ${option === value ? 'selected' : ''}>${escapeHtml(option)}</option>`).join('')}</select></div>`;
+  }
+  if (field.type === 'checkboxes') {
+    const current = Array.isArray(value) ? value : [];
+    return `<div class="watch-field ${field.full ? 'full' : ''}"><label>${escapeHtml(field.label)}</label><div class="watch-checkboxes">${field.options.map((option) => `<label><input type="checkbox" name="${escapeHtml(field.name)}" value="${escapeHtml(option)}" ${current.includes(option) ? 'checked' : ''}> ${escapeHtml(option)}</label>`).join('')}</div></div>`;
+  }
+  return `<div class="watch-field ${field.full ? 'full' : ''}"><label for="watch-field-${field.name}">${escapeHtml(field.label)}</label><input id="watch-field-${field.name}" name="${escapeHtml(field.name)}" type="${escapeHtml(field.type)}" value="${escapeHtml(value || '')}" ${field.min ? `min="${escapeHtml(field.min)}"` : ''} ${field.max ? `max="${escapeHtml(field.max)}"` : ''}></div>`;
 }
 
 function render() {
   const now = new Date();
-  const spanish = pickSpanishWord(state, now);
-  const dinner = buildDinnerPlan(state, now);
+  const mode = modeForDate(now);
+  const weather = weatherForMode(mode);
+  const fishing = fishingForMode(mode);
+  const spanish = spanishWordForDate(state.data, now);
 
-  elements.date.textContent = formatDate(now);
-  elements.quote.textContent = pickQuote(now);
-  elements.spanishWord.textContent = `${spanish.word} — ${spanish.meaning}`;
-  elements.spanishMeaning.textContent = 'Word of the day for the kids and the grownups.';
-  elements.spanishUsage.textContent = spanish.usage;
+  renderTopBand(now, spanish);
+  renderWeather(weather);
+  renderFishing(fishing);
+  renderFishActivity(fishActivityForMode(mode));
+  renderWatchCard('buy');
+  renderWatchCard('rental');
+  renderWallpaper(mode, weather);
+  renderNotes();
+  renderWatchModal();
+}
 
-  elements.dinnerTitle.textContent = dinner.title;
-  elements.dinnerDescription.textContent = dinner.description;
-  elements.dinnerList.innerHTML = dinner.items.map((item) => `<li>${escapeHtml(item)}</li>`).join('');
+function updateNotes(name, value) {
+  state.data = normalizeState({
+    ...state.data,
+    notes: { ...state.data.notes, [name]: value },
+  });
+  saveState();
+  setNoteStatus(name, 'Saved', 'saved');
+}
 
-  const propertySummary = summarizePropertyWatch(state);
-  elements.rentalSummary.textContent = `${propertySummary}. Real feed automation is the next step; these are the saved settings that should drive it.`;
-  elements.dinnerTimeDisplay.textContent = formatTime(state.dinnerTime);
-  elements.focusDisplay.textContent = focusLabel(state.focusMode);
-  elements.checklistProgress.textContent = checklistProgress(state);
-  elements.propertySummaryShort.textContent = `${state.propertyMode.replaceAll('-', ' ')} mode`;
-  elements.meta.innerHTML = `
-    <span class="project-status-pill">${now.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' })}</span>
-    <span class="project-status-pill">${focusLabel(state.focusMode)}</span>
-    <span class="project-status-pill">Dinner ${formatTime(state.dinnerTime)}</span>
-    <span class="project-status-pill">Checklist ${checklistProgress(state)}</span>
-  `;
+function readModalForm(kind) {
+  const config = WATCH_CONFIG[kind];
+  const form = elements.watchModalForm;
+  const payload = {};
+  for (const field of config.fields) {
+    if (field.type === 'checkboxes') {
+      payload[field.name] = Array.from(form.querySelectorAll(`input[name="${field.name}"]:checked`)).map((input) => input.value);
+      continue;
+    }
+    const input = form.elements.namedItem(field.name);
+    payload[field.name] = input ? input.value : '';
+  }
+  return payload;
+}
 
-  elements.notePreview.innerHTML = state.quickNote
-    ? `<strong>Saved note:</strong> ${escapeHtml(state.quickNote)}`
-    : '<strong>Saved note:</strong> Nothing saved yet. Keep it simple tonight.';
+function saveModalForm() {
+  const kind = state.activeWatchKind;
+  if (!kind) return;
+  const payload = readModalForm(kind);
+  if (kind === 'rental') {
+    state.data = normalizeState({ ...state.data, rentalSettings: payload });
+  } else {
+    state.data = normalizeState({ ...state.data, buySettings: payload });
+  }
+  saveState();
+  elements.watchModalStatus.textContent = 'Saved locally on this phone';
+  render();
+}
 
-  elements.dinnerInput.value = state.dinnerTitle;
-  elements.dinnerSidesInput.value = state.dinnerSides;
-  elements.dinnerTimeInput.value = state.dinnerTime;
-  elements.propertyAreaInput.value = state.propertyArea;
-  elements.propertyBudgetInput.value = state.propertyBudget;
-  elements.propertyModeInput.value = state.propertyMode;
-  elements.propertyNotesInput.value = state.propertyNotes;
-  elements.noteInput.value = state.quickNote;
-  elements.focusInput.value = state.focusMode;
+function resetModalForm() {
+  const kind = state.activeWatchKind;
+  if (!kind) return;
+  const defaults = defaultState();
+  if (kind === 'rental') {
+    state.data = normalizeState({ ...state.data, rentalSettings: defaults.rentalSettings });
+  } else {
+    state.data = normalizeState({ ...state.data, buySettings: defaults.buySettings });
+  }
+  saveState();
+  elements.watchModalStatus.textContent = 'Reset to Dinosaur defaults';
+  render();
+}
 
-  renderChecklist();
+function openWatchModal(kind) {
+  state.activeWatchKind = kind;
+  renderWatchModal();
+}
+
+function closeWatchModal() {
+  state.activeWatchKind = null;
+  elements.watchModal.hidden = true;
 }
 
 function wireEvents() {
-  elements.dinnerForm.addEventListener('submit', (event) => {
-    event.preventDefault();
-    state = normalizeState({
-      ...state,
-      dinnerTitle: elements.dinnerInput.value,
-      dinnerSides: elements.dinnerSidesInput.value,
-      dinnerTime: elements.dinnerTimeInput.value,
+  for (const name of noteIds) {
+    const field = $(`note-${name}`);
+    field.addEventListener('input', () => setNoteStatus(name, 'Saving…', 'saving'));
+    field.addEventListener('change', () => updateNotes(name, field.value));
+    field.addEventListener('blur', () => updateNotes(name, field.value));
+  }
+
+  ['buy', 'rental'].forEach((kind) => {
+    $(`${kind}-open-button`).addEventListener('click', (event) => {
+      event.stopPropagation();
+      openWatchModal(kind);
     });
-    saveState();
-    render();
-  });
-
-  elements.propertyForm.addEventListener('submit', (event) => {
-    event.preventDefault();
-    state = normalizeState({
-      ...state,
-      propertyArea: elements.propertyAreaInput.value,
-      propertyBudget: elements.propertyBudgetInput.value,
-      propertyMode: elements.propertyModeInput.value,
-      propertyNotes: elements.propertyNotesInput.value,
+    $(`${kind}-edit-button`).addEventListener('click', (event) => {
+      event.stopPropagation();
+      openWatchModal(kind);
     });
-    saveState();
-    render();
+    document.querySelector(`[data-watch-kind="${kind}"]`).addEventListener('click', () => openWatchModal(kind));
   });
 
-  elements.noteForm.addEventListener('submit', (event) => {
-    event.preventDefault();
-    state = normalizeState({
-      ...state,
-      quickNote: elements.noteInput.value,
-      focusMode: elements.focusInput.value,
-    });
-    saveState();
-    render();
+  $('watch-modal-close').addEventListener('click', closeWatchModal);
+  $('watch-modal-save').addEventListener('click', saveModalForm);
+  $('watch-modal-reset').addEventListener('click', resetModalForm);
+  elements.watchModal.addEventListener('click', (event) => {
+    if (event.target === elements.watchModal) closeWatchModal();
   });
-
-  elements.refreshSpanishButton.addEventListener('click', () => {
-    state = normalizeState({
-      ...state,
-      pinnedSpanishIndex: ((state.pinnedSpanishIndex ?? 0) + 1) % 4,
-    });
-    saveState();
-    render();
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape') closeWatchModal();
   });
-
-  elements.resetDinnerButton.addEventListener('click', () => {
-    state = normalizeState({
-      ...state,
-      dinnerTitle: '',
-      dinnerSides: '',
-    });
-    saveState();
-    render();
-  });
-
-  elements.resetChecklistButton.addEventListener('click', () => {
-    state = normalizeState({
-      ...state,
-      checklist: defaultState().checklist,
-    });
-    saveState();
-    render();
-  });
-
-  elements.checklist.addEventListener('change', (event) => {
-    const target = event.target;
-    if (!(target instanceof HTMLInputElement)) return;
-    const index = parseInt(target.dataset.checkIndex || '-1', 10);
-    if (Number.isNaN(index) || index < 0 || index >= state.checklist.length) return;
-
-    const nextChecklist = state.checklist.map((item, itemIndex) =>
-      itemIndex === index ? { ...item, done: target.checked } : item,
-    );
-    state = normalizeState({ ...state, checklist: nextChecklist });
-    saveState();
-    render();
-  });
+  window.addEventListener('resize', render);
 }
 
 wireEvents();

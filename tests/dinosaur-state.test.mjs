@@ -4,45 +4,40 @@ import assert from 'node:assert/strict';
 import {
   defaultState,
   normalizeState,
-  buildDinnerPlan,
-  summarizePropertyWatch,
-  checklistProgress,
-  focusLabel,
+  modeForDate,
+  weatherForMode,
+  fishActivityForMode,
+  summarizeWatch,
+  spanishWordForDate,
 } from '../assets/dinosaur-state.js';
 
-test('normalizeState falls back to safe defaults', () => {
-  const normalized = normalizeState({ propertyMode: 'weird', focusMode: 'bad', propertyBudget: 'abc' });
-  const defaults = defaultState();
+test('normalizeState keeps safe defaults for note and watch state', () => {
+  const normalized = normalizeState({
+    notes: { kira: '  Practice at 7  ' },
+    rentalSettings: { sites: ['nope'], sendMode: 'ignored' },
+  });
 
-  assert.equal(normalized.propertyMode, defaults.propertyMode);
-  assert.equal(normalized.focusMode, defaults.focusMode);
-  assert.equal(normalized.propertyBudget, defaults.propertyBudget);
-  assert.equal(normalized.checklist.length, defaults.checklist.length);
+  assert.equal(normalized.notes.kira, 'Practice at 7');
+  assert.deepEqual(normalized.rentalSettings.sites, ['airbnb', 'vrbo']);
+  assert.equal(normalized.rentalSettings.sendMode, defaultState().rentalSettings.sendMode);
 });
 
-test('buildDinnerPlan uses custom saved dinner when present', () => {
-  const plan = buildDinnerPlan(
-    normalizeState({ dinnerTitle: 'Pizza night', dinnerSides: 'Salad, Fruit' }),
-    new Date('2026-04-28T18:00:00'),
-  );
+test('modeForDate stays deterministic and returns matching weather payload', () => {
+  const mode = modeForDate(new Date('2026-04-28T18:00:00Z'));
+  const weather = weatherForMode(mode);
 
-  assert.equal(plan.title, 'Pizza night');
-  assert.equal(plan.custom, true);
-  assert.deepEqual(plan.items, ['Salad', 'Fruit']);
+  assert.ok(['sun', 'cold', 'rain'].includes(mode));
+  assert.equal(typeof weather.temperatureF, 'number');
+  assert.match(weather.image, /family-(sun|cold|rain)\.jpg/);
 });
 
-test('summaries stay human-readable', () => {
-  const summary = summarizePropertyWatch(
-    normalizeState({
-      propertyArea: 'Jacksonville Beach',
-      propertyBudget: '900',
-      propertyMode: 'new-only',
-    }),
-  );
+test('watch summaries and fish activity remain human-readable', () => {
+  const summary = summarizeWatch(defaultState().buySettings, 'buy');
+  const fish = fishActivityForMode('sun');
+  const spanish = spanishWordForDate(defaultState(), new Date('2026-04-28T18:00:00Z'));
 
-  assert.match(summary, /Jacksonville Beach/);
-  assert.match(summary, /\$900/);
-  assert.match(summary, /only new matches/);
-  assert.equal(checklistProgress(defaultState()), '0/4 complete');
-  assert.equal(focusLabel('reset'), 'Reset the house');
+  assert.match(summary, /Palm Coast/);
+  assert.equal(fish.length, 3);
+  assert.equal(typeof fish[0].title, 'string');
+  assert.equal(typeof spanish.spanish, 'string');
 });
