@@ -43,6 +43,9 @@ test('service worker normalizes query-string routes for live and project pages',
   assert.match(sw, /live\.html/);
   assert.match(sw, /project\.html/);
   assert.match(sw, /new URL\(request\.url\)/);
+  assert.match(sw, /drake-hub-v4/);
+  assert.match(sw, /isHtmlNavigation/);
+  assert.match(sw, /event\.request\.mode === 'navigate'/);
 });
 
 test('site documents installable app metadata for phone home-screen entry', () => {

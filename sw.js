@@ -1,4 +1,4 @@
-const CACHE_NAME = 'drake-hub-v3';
+const CACHE_NAME = 'drake-hub-v4';
 const ASSETS = [
   './',
   './index.html',
@@ -55,6 +55,33 @@ self.addEventListener('activate', (event) => {
 self.addEventListener('fetch', (event) => {
   if (event.request.method !== 'GET') return;
   const normalizedRequest = normalizeRequest(event.request);
+  const requestUrl = new URL(event.request.url);
+  const isHtmlNavigation =
+    event.request.mode === 'navigate' ||
+    requestUrl.pathname.endsWith('/') ||
+    requestUrl.pathname.endsWith('/index.html') ||
+    requestUrl.pathname.endsWith('/project.html') ||
+    requestUrl.pathname.endsWith('/live.html') ||
+    requestUrl.pathname.endsWith('/dinosaur.html');
+
+  if (isHtmlNavigation) {
+    event.respondWith(
+      fetch(event.request)
+        .then((response) => {
+          if (response && response.status === 200) {
+            const clone = response.clone();
+            caches.open(CACHE_NAME).then((cache) => cache.put(normalizedRequest, clone));
+          }
+          return response;
+        })
+        .catch(() =>
+          caches.match(normalizedRequest).then(
+            (cachedResponse) => cachedResponse || caches.match('./index.html'),
+          ),
+        ),
+    );
+    return;
+  }
 
   event.respondWith(
     caches.match(normalizedRequest).then((cached) => {
@@ -68,7 +95,11 @@ self.addEventListener('fetch', (event) => {
           caches.open(CACHE_NAME).then((cache) => cache.put(normalizedRequest, clone));
           return response;
         })
-        .catch(() => caches.match(normalizedRequest).then((cachedResponse) => cachedResponse || caches.match('./index.html')));
+        .catch(() =>
+          caches.match(normalizedRequest).then(
+            (cachedResponse) => cachedResponse || caches.match('./index.html'),
+          ),
+        );
     }),
   );
 });
