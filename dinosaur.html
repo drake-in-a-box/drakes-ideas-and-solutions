@@ -10,6 +10,9 @@
   <meta name="apple-mobile-web-app-title" content="Dinosaur">
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="description" content="Dinosaur is Drake's clean fullscreen family dashboard, ported to phone with the same TV model visual system.">
+  <link rel="manifest" href="./manifest.webmanifest">
+  <link rel="apple-touch-icon" href="./assets/icons/icon-180.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="./assets/icons/icon-192.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -463,6 +466,7 @@
     <div class="top-actions">
       <a class="top-link" href="./index.html">Back to hub</a>
       <a class="top-link" href="./project.html?idea=dinosaur-dashboard">Project brief</a>
+      <button class="top-link" type="button" data-install-button>Install app</button>
     </div>
 
     <section class="topband">
@@ -483,6 +487,7 @@
       <article class="calendar-card glass">
         <div class="section-kicker">Family calendar</div>
         <div id="calendar-copy" class="calendar-copy">Dinner and family rhythm live here until calendar sync exists.</div>
+        <div class="calendar-copy" data-install-copy>Want a phone icon? Tap Install app or Add to Home Screen.</div>
       </article>
     </section>
 
@@ -606,6 +611,7 @@
       </div>
     </div>
   </div>
+  <script src="./assets/site.js"></script>
   <script type="module" src="./assets/dinosaur.js?v=tv-port-20260428"></script>
 </body>
 </html>

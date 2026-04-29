@@ -8,8 +8,29 @@ A futuristic static landing page for Drake's current ideas, tools, and buildable
 - responsive tile grid
 - project detail pages
 - live Dinosaur family dashboard surface
+- mobile live launch pages for the other web-ready projects
+- installable phone-friendly PWA shell with Add-to-Home-Screen support
 - GitHub Pages friendly
 - easy to expand by editing `assets/ideas.js`
+
+## Phone app access
+
+This site now includes a web app manifest, service worker, and home-screen icons.
+
+That means:
+- **Android:** tap **Install app** or use the browser menu → **Install app**
+- **iPhone:** Safari → **Share** → **Add to Home Screen**
+
+Once installed, you get a real tappable app icon on your phone for the hub.
+
+## Live mobile project surfaces
+
+Every `webReady` project now has a real phone-safe live surface:
+- Dinosaur opens its dedicated `dinosaur.html` experience
+- the other web-ready ideas open `live.html?idea=<slug>` mobile launch pages
+- each still keeps the deeper `project.html?idea=<slug>` brief
+
+These pages are intentionally honest: they are live mobile launch surfaces, not fake backend demos.
 
 ## Dinosaur live surface
 

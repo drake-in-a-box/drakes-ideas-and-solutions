@@ -21,14 +21,16 @@ summary.textContent = project.summary;
 description.textContent = project.description;
 value.textContent = project.value;
 nextAction.textContent = project.nextAction;
-readiness.textContent = project.webReady
-  ? `This concept is a good web candidate. Current state: ${project.stage}. Readiness signal: ${project.readiness}.`
-  : `This concept needs more than a static site before it becomes truly live. Current state: ${project.stage}. Readiness signal: ${project.readiness}.`;
+readiness.textContent = project.liveUrl
+  ? `This project has a live mobile surface now. Current state: ${project.stage}. Readiness signal: ${project.readiness}.`
+  : project.webReady
+    ? `This concept is web-ready and should be promoted to a live surface next. Current state: ${project.stage}. Readiness signal: ${project.readiness}.`
+    : `This concept needs more than a static site before it becomes truly live. Current state: ${project.stage}. Readiness signal: ${project.readiness}.`;
 hero.className = `project-hero accent-${project.accent}`;
 statusRow.innerHTML = `
   <span class="project-status-pill">${project.stage}</span>
   <span class="project-status-pill">${project.readiness}</span>
-  <span class="project-status-pill">${project.webReady ? 'Web candidate' : 'Needs deeper build path'}</span>
+  <span class="project-status-pill">${project.liveUrl ? 'Live on phone now' : project.webReady ? 'Web-ready next' : 'Needs deeper build path'}</span>
 `;
 
 if (project.liveUrl) {

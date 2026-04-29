@@ -8,6 +8,13 @@
       name="description"
       content="A futuristic launchpad for Drake's ideas, products, and buildable solutions."
     />
+    <meta name="theme-color" content="#050816" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="Drake Hub" />
+    <link rel="manifest" href="./manifest.webmanifest" />
+    <link rel="apple-touch-icon" href="./assets/icons/icon-180.png" />
+    <link rel="icon" type="image/png" sizes="192x192" href="./assets/icons/icon-192.png" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -30,7 +37,10 @@
         <span class="brand-kicker">DRAKE // SIGNAL HUB</span>
         <span class="brand-name">Drake's Ideas and Solutions</span>
       </div>
-      <a class="top-cta" href="#ideas-grid">Enter the vault</a>
+      <div class="topbar-actions">
+        <button class="top-cta hidden" type="button" data-install-button>Install app</button>
+        <a class="top-cta" href="#ideas-grid">Enter the vault</a>
+      </div>
     </header>
 
     <main>
@@ -45,7 +55,13 @@
           <div class="hero-actions">
             <a class="button button-primary" href="#ideas-grid">Browse projects</a>
             <button class="button button-secondary" id="focus-live">Show web-ready ideas</button>
+            <button class="button button-secondary" type="button" data-install-button>
+              Install app
+            </button>
           </div>
+          <p class="install-inline-copy" data-install-copy>
+            Want a phone icon? Use Install app or Add to Home Screen.
+          </p>
         </div>
 
         <div class="hero-panel">
@@ -123,6 +139,7 @@
     </div>
 
     <script src="./assets/ideas.js"></script>
+    <script src="./assets/site.js"></script>
     <script src="./assets/app.js"></script>
   </body>
 </html>

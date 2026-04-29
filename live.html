@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <title>Live Surface • Drake's Ideas and Solutions</title>
+    <meta
+      name="description"
+      content="Phone-first live project surface for Drake's ideas and solutions."
+    />
+    <meta name="theme-color" content="#050816" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="Drake Hub" />
+    <link rel="manifest" href="./manifest.webmanifest" />
+    <link rel="apple-touch-icon" href="./assets/icons/icon-180.png" />
+    <link rel="icon" type="image/png" sizes="192x192" href="./assets/icons/icon-192.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Geist+Mono:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./assets/styles.css" />
+  </head>
+  <body>
+    <div class="background-shell" aria-hidden="true">
+      <div class="orb orb-a"></div>
+      <div class="orb orb-b"></div>
+      <div class="orb orb-c"></div>
+      <div class="grid-glow"></div>
+      <div class="scanlines"></div>
+    </div>
+
+    <header class="topbar">
+      <div class="brand-lockup">
+        <span class="brand-kicker">DRAKE // MOBILE LIVE SURFACE</span>
+        <span class="brand-name">Drake's Ideas and Solutions</span>
+      </div>
+      <div class="topbar-actions">
+        <a class="top-cta" href="./index.html">Hub</a>
+        <button class="top-cta hidden" type="button" data-install-button>Install app</button>
+      </div>
+    </header>
+
+    <main class="live-main">
+      <section class="live-shell">
+        <div class="live-hero accent-ice" id="live-hero">
+          <p class="live-kicker" id="live-kicker">Loading mobile surface…</p>
+          <h1 id="live-title">Loading…</h1>
+          <p class="live-summary" id="live-summary"></p>
+          <div class="live-status-row" id="live-status-row"></div>
+          <div class="install-callout">
+            <div>
+              <strong>One-tap phone access</strong>
+              <p data-install-copy>Want a phone icon? Use Install app or Add to Home Screen.</p>
+            </div>
+            <button class="button button-primary" type="button" data-install-button>
+              Install app
+            </button>
+          </div>
+          <div class="live-hero-actions">
+            <a class="button button-primary" id="live-primary-action" href="./index.html">Open hub</a>
+            <a class="button button-secondary" id="live-brief-link" href="./project.html">Open project brief</a>
+          </div>
+        </div>
+
+        <div class="live-grid">
+          <section class="live-panel">
+            <p class="section-label">What is live now</p>
+            <h2>Current mobile version</h2>
+            <p id="live-now-copy"></p>
+            <div class="live-pills" id="live-pills"></div>
+          </section>
+
+          <section class="live-panel">
+            <p class="section-label">Reality check</p>
+            <h2>No fake backend claims</h2>
+            <p id="live-honesty-copy"></p>
+          </section>
+
+          <section class="live-panel live-panel-feature">
+            <p class="section-label">Why it matters</p>
+            <h2>Value and next move</h2>
+            <p id="live-value-copy"></p>
+            <div class="live-checklist" id="live-checklist"></div>
+          </section>
+
+          <section class="live-panel">
+            <p class="section-label">Phone actions</p>
+            <h2>Launch path</h2>
+            <div class="live-actions-list" id="live-actions-list"></div>
+          </section>
+        </div>
+      </section>
+    </main>
+
+    <script src="./assets/ideas.js"></script>
+    <script src="./assets/site.js"></script>
+    <script src="./assets/live.js"></script>
+  </body>
+</html>

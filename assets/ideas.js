@@ -4,14 +4,14 @@ window.ideasCatalog = [
     title: 'Dinosaur Dashboard',
     category: 'Family Systems',
     stage: 'In progress',
-    readiness: 'Phone-ready later',
+    readiness: 'Live on phone now',
     summary: 'A premium family TV dashboard with kid-safe content, wall-art energy, and daily utility.',
     description:
       'Fullscreen morning dashboard for the house: motivational quote, Spanish word, property-watch modules, and interactive TV-first design.',
     value:
       'Turns a passive screen into a beautiful operating surface for the family while keeping the experience safe for young kids.',
     nextAction:
-      'Ship the phone-safe public Dinosaur surface now, then layer in real feeds and settings next.',
+      'Keep tightening parity between the TV version and the phone-safe public surface.',
     targetLabel: 'Live surface',
     liveUrl: './dinosaur.html',
     accent: 'cyan',
@@ -23,7 +23,7 @@ window.ideasCatalog = [
     title: 'Job Hunting Tool',
     category: 'Career Tech',
     stage: 'In progress',
-    readiness: 'Web app path',
+    readiness: 'Live mobile launch page',
     summary: 'Evidence-backed resume, LinkedIn, job scoring, and application tracking.',
     description:
       'A reusable product for candidate intake, explainable job ranking, and honest AI-assisted career tooling.',
@@ -31,7 +31,8 @@ window.ideasCatalog = [
       'Useful beyond one person. Could become a real web product instead of another disposable prompt wrapper.',
     nextAction:
       'Finish the saved-job integrity pass, then ship a stable hosted frontend/backend split.',
-    targetLabel: 'Project page',
+    targetLabel: 'Live surface',
+    liveUrl: './live.html?idea=job-hunting-tool',
     accent: 'violet',
     priority: 'High',
     webReady: true,
@@ -41,7 +42,7 @@ window.ideasCatalog = [
     title: 'Ops Billing Tool',
     category: 'Operations',
     stage: 'Solid MVP',
-    readiness: 'Deployable',
+    readiness: 'Live mobile launch page',
     summary: 'A fast billing capture workflow for warehouse and 3PL operations.',
     description:
       'Rapid entry, category-aware billing, monthly export, and honest webhook-based Google Sheets integration.',
@@ -49,7 +50,8 @@ window.ideasCatalog = [
       'Cuts admin drag and makes ugly ops data more usable without pretending the workflow is cleaner than it is.',
     nextAction:
       'Hook this page to a live demo or hosted instance once you want it customer-facing.',
-    targetLabel: 'Project page',
+    targetLabel: 'Live surface',
+    liveUrl: './live.html?idea=ops-billing-tool',
     accent: 'blue',
     priority: 'High',
     webReady: true,
@@ -59,7 +61,7 @@ window.ideasCatalog = [
     title: 'Sports Card Valuation Dashboard',
     category: 'Collector Tools',
     stage: 'Ready to build',
-    readiness: 'Great web candidate',
+    readiness: 'Live mobile launch page',
     summary: 'Camera-assisted card intake and pricing intelligence for the collection.',
     description:
       'A valuation dashboard that can inventory cards, surface comps, and organize a collector-grade workflow.',
@@ -67,7 +69,8 @@ window.ideasCatalog = [
       'This has real utility and hobby upside. It also fits your taste for AI-assisted physical-world workflows.',
     nextAction:
       'Build the first camera-to-card intake workflow and expose it behind a simple mobile-friendly UI.',
-    targetLabel: 'Project page',
+    targetLabel: 'Live surface',
+    liveUrl: './live.html?idea=sports-card-valuation-dashboard',
     accent: 'emerald',
     priority: 'Medium',
     webReady: true,
@@ -77,7 +80,7 @@ window.ideasCatalog = [
     title: 'Beach House Hunter',
     category: 'Property Search',
     stage: 'Concept + partial logic',
-    readiness: 'Web-ready with feeds',
+    readiness: 'Live mobile launch page',
     summary: 'A premium search and ranking surface for beach rentals and for-sale listings.',
     description:
       'Separate rental and buy tracks, richer summaries, explainable filters, and better daily discovery than generic listing sites.',
@@ -85,7 +88,8 @@ window.ideasCatalog = [
       'This is the kind of thing that actually deserves a custom interface because normal property sites are noisy and dumb.',
     nextAction:
       'Turn this into a live deal board with saved filters, summaries, and ranking logic.',
-    targetLabel: 'Project page',
+    targetLabel: 'Live surface',
+    liveUrl: './live.html?idea=beach-house-hunter',
     accent: 'orange',
     priority: 'High',
     webReady: true,
@@ -113,7 +117,7 @@ window.ideasCatalog = [
     title: 'Founder / COO Second Brain',
     category: 'Strategy Systems',
     stage: 'Ongoing system',
-    readiness: 'Portal-ready',
+    readiness: 'Live mobile launch page',
     summary: 'A multi-project command center for strategy, execution, planning, and follow-through.',
     description:
       'The durable layer behind your notes, ideas, active projects, and decision support across company-building work.',
@@ -121,7 +125,8 @@ window.ideasCatalog = [
       'This is the actual meta-product: making your operations brain visible, organized, and faster to deploy.',
     nextAction:
       'Keep this hub as the default front door, then connect each project to a real live surface.',
-    targetLabel: 'Project page',
+    targetLabel: 'Live surface',
+    liveUrl: './live.html?idea=founder-coo-second-brain',
     accent: 'ice',
     priority: 'High',
     webReady: true,
@@ -131,7 +136,7 @@ window.ideasCatalog = [
     title: 'AI Media + Voice Lab',
     category: 'Creative Systems',
     stage: 'Ready for experiments',
-    readiness: 'Web showcase first',
+    readiness: 'Live mobile launch page',
     summary: 'Consent-based voice cloning, media workflows, and creative AI tooling.',
     description:
       'A lab for voice models, media experiments, capture pipelines, and sharable outputs built with actual taste.',
@@ -139,7 +144,8 @@ window.ideasCatalog = [
       'This can spin up into demos, tools, and polished experiences fast because the concepts are strong and visually interesting.',
     nextAction:
       'Make this a showcase surface with playable examples, workflows, and launchable experiments.',
-    targetLabel: 'Project page',
+    targetLabel: 'Live surface',
+    liveUrl: './live.html?idea=ai-media-voice-lab',
     accent: 'rose',
     priority: 'Medium',
     webReady: true,
