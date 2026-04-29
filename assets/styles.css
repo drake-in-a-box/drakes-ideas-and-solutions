@@ -1441,3 +1441,458 @@ body::after {
     clip-path: polygon(0 0, calc(100% - 14px) 0, 100% 14px, 100% 100%, 14px 100%, 0 calc(100% - 14px));
   }
 }
+
+/* Xenotech intensifier — make this feel less like startup sci-fi and more like a recovered alien console */
+
+:root {
+  --xeno-black: #020503;
+  --xeno-deep: #06110b;
+  --xeno-panel: rgba(5, 14, 10, 0.84);
+  --xeno-panel-strong: rgba(7, 17, 12, 0.96);
+  --xeno-acid: #c7ff4f;
+  --xeno-mint: #84ffd8;
+  --xeno-cyan: #4be7ff;
+  --xeno-amber: #ffcf72;
+  --xeno-text: #efffe8;
+  --xeno-soft: rgba(207, 255, 217, 0.58);
+  --xeno-line: rgba(199, 255, 79, 0.22);
+  --xeno-line-strong: rgba(199, 255, 79, 0.52);
+}
+
+body {
+  background:
+    radial-gradient(circle at 12% 14%, rgba(199, 255, 79, 0.12), transparent 20%),
+    radial-gradient(circle at 82% 8%, rgba(75, 231, 255, 0.14), transparent 18%),
+    radial-gradient(circle at 50% 58%, rgba(132, 255, 216, 0.08), transparent 22%),
+    linear-gradient(180deg, #010201 0%, #040905 20%, #020503 52%, #06140d 100%);
+  color: var(--xeno-text);
+}
+
+.background-shell::before,
+.background-shell::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.background-shell::before {
+  background:
+    repeating-linear-gradient(90deg, transparent 0 63px, rgba(199, 255, 79, 0.035) 63px 64px),
+    repeating-linear-gradient(0deg, transparent 0 63px, rgba(199, 255, 79, 0.03) 63px 64px),
+    radial-gradient(circle at center, rgba(199, 255, 79, 0.08), transparent 46%);
+  opacity: 0.85;
+}
+
+.background-shell::after {
+  background:
+    linear-gradient(120deg, transparent 0 8%, rgba(199, 255, 79, 0.07) 8.2%, transparent 8.4%),
+    linear-gradient(300deg, transparent 0 78%, rgba(75, 231, 255, 0.06) 78.2%, transparent 78.4%);
+  mix-blend-mode: screen;
+  opacity: 0.7;
+}
+
+.orb {
+  filter: blur(84px);
+  opacity: 0.62;
+}
+
+.orb-a {
+  background: rgba(199, 255, 79, 0.2);
+}
+
+.orb-b {
+  background: rgba(75, 231, 255, 0.15);
+}
+
+.orb-c {
+  background: rgba(255, 207, 114, 0.08);
+}
+
+.grid-glow {
+  background-image:
+    linear-gradient(rgba(199, 255, 79, 0.085) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(199, 255, 79, 0.085) 1px, transparent 1px);
+  background-size: 72px 72px;
+  opacity: 0.58;
+}
+
+.scanlines {
+  background-size: 100% 6px;
+  opacity: 0.12;
+}
+
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 12;
+  padding-top: 1rem;
+  padding-bottom: 0.8rem;
+  backdrop-filter: blur(16px);
+}
+
+.topbar::after {
+  content: '⌬ NAV / ACTIVE / GLYPH-LINK / FIELD-SAFE';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -0.6rem;
+  font-family: 'Geist Mono', ui-monospace, monospace;
+  font-size: 0.62rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: rgba(199, 255, 79, 0.42);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: clip;
+}
+
+.brand-kicker,
+.section-label,
+.modal-kicker,
+.eyebrow,
+.live-kicker,
+.project-overline,
+.project-status-pill,
+.live-pill,
+.status-pill,
+.card-category,
+.card-priority,
+.metric-label,
+.card-stage,
+.card-ready,
+.filter-chip,
+.alien-diagnostics span,
+.glyph-ribbon {
+  font-family: 'Geist Mono', ui-monospace, monospace;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+}
+
+.brand-kicker,
+.section-label,
+.eyebrow,
+.live-kicker,
+.project-overline,
+.modal-kicker {
+  color: rgba(199, 255, 79, 0.72);
+}
+
+.brand-name {
+  color: #f4fff6;
+  letter-spacing: 0.04em;
+}
+
+.hero-copy,
+.hero-panel,
+.controls-panel,
+.idea-card,
+.modal-card,
+.project-hero,
+.project-panel,
+.live-hero,
+.live-panel,
+.install-callout,
+.live-action-card {
+  background:
+    linear-gradient(180deg, rgba(12, 24, 15, 0.88), rgba(6, 14, 10, 0.96));
+  border: 1px solid var(--xeno-line);
+  box-shadow:
+    inset 0 0 0 1px rgba(199, 255, 79, 0.05),
+    inset 0 1px 0 rgba(255, 255, 255, 0.04),
+    0 0 0 1px rgba(5, 10, 7, 0.7),
+    0 18px 80px rgba(0, 0, 0, 0.54),
+    0 0 44px rgba(199, 255, 79, 0.08);
+  clip-path: polygon(0 0, calc(100% - 28px) 0, 100% 28px, 100% 100%, 24px 100%, 0 calc(100% - 24px));
+  border-radius: 0;
+}
+
+.hero-copy,
+.hero-panel,
+.project-hero,
+.live-hero {
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-copy::before,
+.hero-panel::before,
+.project-hero::before,
+.live-hero::before,
+.idea-card::before,
+.project-panel::before,
+.live-panel::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(130deg, rgba(199, 255, 79, 0.08), transparent 18%),
+    linear-gradient(90deg, transparent 0 92%, rgba(75, 231, 255, 0.1) 92% 92.6%, transparent 92.6%),
+    linear-gradient(0deg, transparent 0 94%, rgba(199, 255, 79, 0.08) 94% 94.6%, transparent 94.6%);
+  pointer-events: none;
+}
+
+.hero h1,
+.live-hero h1,
+.project-hero h1 {
+  color: #f5ffe5;
+  text-shadow: 0 0 18px rgba(199, 255, 79, 0.12), 0 0 36px rgba(75, 231, 255, 0.08);
+}
+
+.hero h1 {
+  font-size: clamp(3.2rem, 8vw, 7.4rem);
+  max-width: 9ch;
+}
+
+.hero h1,
+.live-hero h1,
+.project-hero h1,
+.idea-card h3,
+.controls-panel h2,
+.ideas-section h2,
+.project-panel h2,
+.live-panel h2 {
+  letter-spacing: -0.045em;
+}
+
+.hero-text,
+.section-copy,
+.card-body p,
+.project-summary,
+.live-summary,
+#live-now-copy,
+#live-honesty-copy,
+#live-value-copy,
+#project-description,
+#project-value,
+#project-next-action,
+#project-readiness,
+.install-inline-copy,
+.hero-panel-footer p,
+.modal-summary,
+.modal-sections p {
+  color: rgba(225, 255, 232, 0.76);
+}
+
+.alien-diagnostics {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+  margin-top: 1.2rem;
+  margin-bottom: 1rem;
+}
+
+.alien-diagnostics span {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2rem;
+  padding: 0.45rem 0.7rem;
+  font-size: 0.68rem;
+  color: rgba(240, 255, 216, 0.82);
+  background: linear-gradient(180deg, rgba(10, 24, 15, 0.88), rgba(7, 16, 12, 0.96));
+  border: 1px solid rgba(199, 255, 79, 0.22);
+  clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
+}
+
+.signal-bars {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  align-items: end;
+  gap: 0.55rem;
+  min-height: 5rem;
+  margin-top: 0.8rem;
+}
+
+.signal-bars span {
+  display: block;
+  border-radius: 999px;
+  background: linear-gradient(180deg, rgba(75, 231, 255, 0.12), rgba(199, 255, 79, 0.9));
+  box-shadow: 0 0 18px rgba(199, 255, 79, 0.12);
+}
+
+.signal-bars span:nth-child(1) { height: 28%; }
+.signal-bars span:nth-child(2) { height: 82%; }
+.signal-bars span:nth-child(3) { height: 46%; }
+.signal-bars span:nth-child(4) { height: 100%; }
+.signal-bars span:nth-child(5) { height: 60%; }
+.signal-bars span:nth-child(6) { height: 34%; }
+
+.glyph-ribbon {
+  margin-top: 0.9rem;
+  margin-bottom: 0.4rem;
+  color: rgba(199, 255, 79, 0.74);
+  font-size: 0.84rem;
+  line-height: 1.8;
+  word-spacing: 0.32rem;
+  opacity: 0.92;
+}
+
+.top-cta,
+.button,
+.filter-chip,
+.card-action-primary,
+.card-action-secondary,
+.live-action-card {
+  border-radius: 0;
+  clip-path: polygon(0 0, calc(100% - 14px) 0, 100% 14px, 100% 100%, 14px 100%, 0 calc(100% - 14px));
+  border: 1px solid rgba(199, 255, 79, 0.24);
+  background: linear-gradient(180deg, rgba(10, 22, 15, 0.9), rgba(6, 12, 9, 0.98));
+}
+
+.top-cta,
+.button,
+.filter-chip,
+.card-action-primary,
+.card-action-secondary {
+  font-family: 'Geist Mono', ui-monospace, monospace;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.button-primary,
+.card-action-primary {
+  color: #071005;
+  background: linear-gradient(135deg, var(--xeno-acid), var(--xeno-mint) 54%, var(--xeno-cyan));
+  border-color: rgba(199, 255, 79, 0.82);
+  box-shadow: 0 0 0 1px rgba(255,255,255,0.04), 0 0 28px rgba(199, 255, 79, 0.16);
+}
+
+.button-secondary,
+.card-action-secondary,
+.top-cta,
+.filter-chip {
+  color: rgba(235, 255, 221, 0.92);
+}
+
+.top-cta:hover,
+.button:hover,
+.filter-chip:hover,
+.idea-card:hover,
+.modal-close:hover,
+.live-action-card:hover {
+  transform: translateY(-3px) scale(1.005);
+  border-color: rgba(199, 255, 79, 0.48);
+}
+
+.status-pill,
+.project-status-pill,
+.live-pill,
+.card-stage,
+.card-ready,
+.filter-chip.active {
+  border-radius: 0;
+  color: #ebffd2;
+  background: linear-gradient(180deg, rgba(12, 28, 16, 0.9), rgba(6, 15, 10, 0.94));
+  border: 1px solid rgba(199, 255, 79, 0.28);
+  clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
+}
+
+.hero-metrics article,
+.modal-meta span,
+.live-check-item,
+.live-actions-list a,
+.project-status-row span,
+.live-status-row span {
+  position: relative;
+}
+
+.metric-value {
+  color: var(--xeno-acid);
+  text-shadow: 0 0 18px rgba(199, 255, 79, 0.18);
+}
+
+.hero-panel-header,
+.card-header,
+.card-footer,
+.hero-metrics,
+.project-status-row,
+.live-status-row,
+.modal-meta {
+  color: rgba(219, 255, 225, 0.74);
+}
+
+.idea-card {
+  overflow: hidden;
+}
+
+.card-glow {
+  inset: -16% auto auto -8%;
+  width: 14rem;
+  height: 14rem;
+  background: radial-gradient(circle, rgba(199, 255, 79, 0.22), transparent 62%);
+  filter: blur(16px);
+}
+
+.idea-card::after,
+.project-hero::after,
+.live-hero::after,
+.hero-copy::after,
+.hero-panel::after,
+.controls-panel::after,
+.project-panel::after,
+.live-panel::after {
+  content: '';
+  position: absolute;
+  right: 16px;
+  top: 14px;
+  width: 96px;
+  height: 20px;
+  border-top: 1px solid rgba(199, 255, 79, 0.42);
+  border-right: 1px solid rgba(199, 255, 79, 0.42);
+  opacity: 0.85;
+}
+
+.idea-card h3,
+.project-panel h2,
+.live-panel h2,
+.controls-panel h2,
+.ideas-section h2,
+.modal-card h3 {
+  color: #f2ffe4;
+}
+
+.live-action-card strong,
+.card-action-primary,
+.card-action-secondary {
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+}
+
+.modal-card {
+  background: linear-gradient(180deg, rgba(6, 13, 10, 0.98), rgba(2, 7, 5, 0.98));
+}
+
+@media (max-width: 780px) {
+  .topbar::after {
+    font-size: 0.54rem;
+    letter-spacing: 0.18em;
+  }
+
+  .hero-copy,
+  .hero-panel,
+  .controls-panel,
+  .ideas-section,
+  .modal-card,
+  .project-hero,
+  .project-panel,
+  .dinosaur-hero,
+  .dino-card,
+  .live-hero,
+  .live-panel,
+  .install-callout,
+  .live-action-card {
+    clip-path: polygon(0 0, calc(100% - 16px) 0, 100% 16px, 100% 100%, 16px 100%, 0 calc(100% - 16px));
+  }
+
+  .hero h1 {
+    max-width: 11ch;
+  }
+
+  .alien-diagnostics {
+    gap: 0.45rem;
+  }
+
+  .alien-diagnostics span {
+    width: 100%;
+  }
+}
