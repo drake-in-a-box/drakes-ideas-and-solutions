@@ -72,6 +72,24 @@ const liveCopyBySlug = {
       'Can grow into tappable experiment cards later',
     ],
   },
+  inflatagift: {
+    now: 'This mobile surface is live now as the public entrypoint for the InflataGift product system, so you can reach it directly from the app instead of hunting through repos.',
+    honesty: 'The old homepage URL on the repo points to a dead backend path, so this hub-hosted surface is the honest working website entry right now.',
+    checklist: [
+      'InflataGift is now reachable from the app',
+      'Product brief stays one tap away',
+      'Next real step: ship the dedicated marketing site publicly',
+    ],
+  },
+  deadspace: {
+    now: 'This mobile surface is live now as the public Deadspace entrypoint, giving the concept an actual website path from the app instead of leaving it as a floating idea.',
+    honesty: 'Deadspace has a standalone repo landing page concept, but this app-hosted route is the cleanest guaranteed access path from your command hub right now.',
+    checklist: [
+      'Deadspace is now reachable from the app',
+      'Project brief stays one tap away',
+      'Next real step: decide whether to promote the dedicated standalone site too',
+    ],
+  },
 };
 
 const defaultCopy = {
