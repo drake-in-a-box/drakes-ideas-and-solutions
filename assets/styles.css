@@ -1151,3 +1151,293 @@ main {
     grid-column: auto;
   }
 }
+
+/* Alien technology visual pass */
+:root {
+  --bg: #02030a;
+  --bg-2: #081116;
+  --panel: linear-gradient(180deg, rgba(7, 18, 24, 0.86), rgba(4, 10, 18, 0.94));
+  --panel-strong: linear-gradient(180deg, rgba(6, 15, 22, 0.96), rgba(3, 8, 14, 0.98));
+  --text: #effff8;
+  --muted: rgba(206, 255, 236, 0.76);
+  --soft: rgba(128, 255, 207, 0.48);
+  --line: rgba(35, 255, 168, 0.16);
+  --line-strong: rgba(67, 255, 194, 0.38);
+  --glow-blue: #44f6ff;
+  --glow-violet: #7d7bff;
+  --glow-pink: #ff55df;
+  --glow-green: #6dffb4;
+  --shadow: 0 28px 100px rgba(0, 0, 0, 0.58);
+}
+
+body {
+  font-family: 'Geist Mono', 'Inter', system-ui, sans-serif;
+  background:
+    radial-gradient(circle at 12% 18%, rgba(68, 246, 255, 0.12), transparent 0 24%),
+    radial-gradient(circle at 80% 8%, rgba(125, 123, 255, 0.18), transparent 0 26%),
+    radial-gradient(circle at 50% 120%, rgba(109, 255, 180, 0.12), transparent 0 34%),
+    linear-gradient(180deg, #010208 0%, #051017 46%, #02050d 100%);
+}
+
+body::before,
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: -1;
+}
+
+body::before {
+  background:
+    linear-gradient(90deg, transparent 0, rgba(109, 255, 180, 0.06) 50%, transparent 100%),
+    linear-gradient(180deg, rgba(68, 246, 255, 0.03), transparent 45%);
+  mix-blend-mode: screen;
+  opacity: 0.9;
+}
+
+body::after {
+  background-image:
+    linear-gradient(rgba(42, 255, 181, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(42, 255, 181, 0.05) 1px, transparent 1px);
+  background-size: 72px 72px;
+  mask-image: radial-gradient(circle at center, rgba(255, 255, 255, 0.72), transparent 86%);
+  opacity: 0.3;
+}
+
+.scanlines {
+  opacity: 0.1;
+  background-size: 100% 6px;
+}
+
+.orb {
+  filter: blur(90px);
+  opacity: 0.75;
+}
+
+.topbar,
+.hero,
+.controls-panel,
+.ideas-section,
+.project-shell,
+.live-shell {
+  position: relative;
+}
+
+.brand-kicker,
+.section-label,
+.card-category,
+.card-priority,
+.modal-kicker,
+.filter-chip,
+.status-pill,
+.project-overline,
+.project-status-pill,
+.live-kicker,
+.live-pill {
+  color: #8effcf;
+  letter-spacing: 0.2em;
+}
+
+.brand-name,
+.hero h1,
+.hero-panel-header span,
+.metric-value,
+.section-heading h2,
+.card-body h3,
+.project-hero h1,
+.project-panel h2,
+.live-hero h1,
+.live-panel h2,
+.dinosaur-shell h1,
+.dino-card h3 {
+  font-family: 'Geist Mono', 'Inter', system-ui, sans-serif;
+  text-transform: uppercase;
+}
+
+.hero h1,
+.project-hero h1,
+.live-hero h1 {
+  text-shadow: 0 0 24px rgba(68, 246, 255, 0.2), 0 0 48px rgba(109, 255, 180, 0.12);
+}
+
+.hero-copy,
+.hero-panel,
+.controls-panel,
+.idea-card,
+.modal-card,
+.project-hero,
+.project-panel,
+.live-hero,
+.live-panel,
+.dinosaur-hero,
+.dino-card,
+.install-callout {
+  position: relative;
+  background: var(--panel);
+  border: 1px solid rgba(58, 255, 182, 0.18);
+  box-shadow:
+    inset 0 1px 0 rgba(200, 255, 239, 0.05),
+    0 0 0 1px rgba(68, 246, 255, 0.05),
+    0 24px 90px rgba(0, 0, 0, 0.5);
+}
+
+.hero-copy::before,
+.hero-panel::before,
+.controls-panel::before,
+.idea-card::before,
+.project-hero::before,
+.project-panel::before,
+.live-hero::before,
+.live-panel::before,
+.dinosaur-hero::before,
+.dino-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(135deg, rgba(68, 246, 255, 0.45), rgba(125, 123, 255, 0.16), rgba(109, 255, 180, 0.45));
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0.42;
+  pointer-events: none;
+}
+
+.hero-copy,
+.hero-panel,
+.controls-panel,
+.idea-card,
+.project-hero,
+.project-panel,
+.live-hero,
+.live-panel {
+  clip-path: polygon(0 0, calc(100% - 18px) 0, 100% 18px, 100% 100%, 18px 100%, 0 calc(100% - 18px));
+}
+
+.top-cta,
+.button,
+.filter-chip,
+.card-action-primary,
+.card-action-secondary,
+.live-action-card {
+  border-radius: 14px;
+  background: linear-gradient(180deg, rgba(8, 20, 24, 0.88), rgba(8, 12, 18, 0.94));
+  border: 1px solid rgba(68, 246, 255, 0.18);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04), 0 0 22px rgba(68, 246, 255, 0.06);
+}
+
+.button-primary,
+.card-action-primary {
+  color: #03110d;
+  background: linear-gradient(135deg, #6dffb4, #44f6ff 56%, #95ffde);
+  border-color: rgba(149, 255, 222, 0.76);
+  box-shadow: 0 0 26px rgba(68, 246, 255, 0.18), 0 0 54px rgba(109, 255, 180, 0.12);
+}
+
+.button-secondary,
+.card-action-secondary,
+.top-cta,
+.filter-chip {
+  color: #d7fff0;
+}
+
+.filter-chip.active,
+.project-status-pill,
+.status-pill,
+.live-pill,
+.card-stage,
+.card-ready {
+  background: rgba(14, 32, 29, 0.82);
+  border: 1px solid rgba(109, 255, 180, 0.22);
+  box-shadow: inset 0 0 0 1px rgba(68, 246, 255, 0.05);
+}
+
+.hero-panel-header,
+.card-header,
+.card-footer,
+.hero-metrics,
+.project-status-row,
+.live-status-row,
+.modal-meta {
+  color: var(--muted);
+}
+
+.metric-value {
+  color: #baffea;
+  text-shadow: 0 0 16px rgba(68, 246, 255, 0.18);
+}
+
+.idea-card {
+  overflow: hidden;
+}
+
+.card-glow {
+  position: absolute;
+  inset: -20% auto auto -10%;
+  width: 12rem;
+  height: 12rem;
+  background: radial-gradient(circle, rgba(68, 246, 255, 0.18), transparent 66%);
+  filter: blur(8px);
+  opacity: 0.9;
+  pointer-events: none;
+}
+
+.idea-card::after,
+.project-hero::after,
+.live-hero::after,
+.hero-copy::after {
+  content: '';
+  position: absolute;
+  right: 16px;
+  top: 14px;
+  width: 88px;
+  height: 18px;
+  border-top: 1px solid rgba(109, 255, 180, 0.38);
+  border-right: 1px solid rgba(109, 255, 180, 0.38);
+  opacity: 0.7;
+}
+
+.install-inline-copy,
+.hero-text,
+.section-copy,
+.card-body p,
+.project-summary,
+.live-summary,
+#live-now-copy,
+#live-honesty-copy,
+#live-value-copy,
+#project-description,
+#project-value,
+#project-next-action,
+#project-readiness {
+  color: rgba(221, 255, 242, 0.78);
+}
+
+.modal-card {
+  background: linear-gradient(180deg, rgba(6, 12, 20, 0.98), rgba(4, 10, 16, 0.98));
+}
+
+.live-action-card strong,
+.card-action-primary,
+.card-action-secondary {
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+@media (max-width: 780px) {
+  .hero-copy,
+  .hero-panel,
+  .controls-panel,
+  .ideas-section,
+  .modal-card,
+  .project-hero,
+  .project-panel,
+  .dinosaur-hero,
+  .dino-card,
+  .live-hero,
+  .live-panel {
+    clip-path: polygon(0 0, calc(100% - 14px) 0, 100% 14px, 100% 100%, 14px 100%, 0 calc(100% - 14px));
+  }
+}
